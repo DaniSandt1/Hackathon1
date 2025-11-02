@@ -1,0 +1,787 @@
+{
+	"info": {
+		"_postman_id": "e870e206-dbcc-435b-a13f-20d163d22fb2",
+		"name": "Hackathon 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47730978",
+		"_collection_link": "https://daniel-sandoval-t-3981431.postman.co/workspace/Hogar-en-Orden~747a4147-440a-4f7b-9919-3b268fdf486a/collection/47730978-e870e206-dbcc-435b-a13f-20d163d22fb2?action=share&source=collection_link&creator=47730978"
+	},
+	"item": [
+		{
+			"name": "1.-Register CENTRAL → Assert 201, guardar userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 201 Created', () => pm.response.code === 201);",
+							"const json = pm.response.json();",
+							"if (json.id) {",
+							"  pm.collectionVariables.set('user_id', json.id);",
+							"  console.log('✅ user_id CENTRAL guardado:', json.id);",
+							"} else {",
+							"  console.log('⚠️ No se devolvió id del usuario CENTRAL');",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"oreo.admin\",\n  \"email\": \"oreo@oreo.com\",\n  \"password\": \"Oreo1234\",\n  \"role\": \"CENTRAL\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.-Login CENTRAL → Assert 200, guardar {{centralToken}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => pm.response.code === 200);",
+							"const json = pm.response.json();",
+							"if (json.token) {",
+							"  pm.collectionVariables.set('centralToken', json.token);",
+							"  console.log('✅ Token CENTRAL guardado');",
+							"} else {",
+							"  console.log('⚠️ Token CENTRAL no encontrado');",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"oreo.admin\",\n  \"password\": \"Oreo1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.-Register BRANCH (Miraflores) → Assert 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 201 Created', () => pm.response.code === 201);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"oreo.branch\",\n  \"email\": \"branch@oreo.com\",\n  \"password\": \"Oreo1234\",\n  \"role\": \"BRANCH\",\n  \"branch\": \"Miraflores\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.- Login BRANCH → Assert 200, guardar {{branchToken}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200 OK', () => pm.response.code === 200);",
+							"const json = pm.response.json();",
+							"if (json.token) {",
+							"  pm.collectionVariables.set('branchToken', json.token);",
+							"  console.log('✅ Token BRANCH guardado');",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"oreo.branch\",\n  \"password\": \"Oreo1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.1.-Venta #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    const json = pm.response.json();\r",
+							"    if (json && json.id) {\r",
+							"        pm.collectionVariables.set(\"sale_id\", json.id);\r",
+							"        console.log(\"✅ ID guardado:\", json.id);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ No se encontró el campo 'id' en la respuesta:\", json);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.error(\"❌ Error al crear venta. Código:\", pm.response.code);\r",
+							"}\r",
+							"pm.test(\"Status 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sku\":\"OREO_CLASSIC_12\",\"units\":25,\"price\":1.99,\"branch\":\"Miraflores\",\"soldAt\":\"2025-09-01T10:30:00Z\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.2.-Venta #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    const json = pm.response.json();\r",
+							"    if (json && json.id) {\r",
+							"        pm.collectionVariables.set(\"sale_id\", json.id);\r",
+							"        console.log(\"✅ ID guardado:\", json.id);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ No se encontró el campo 'id' en la respuesta:\", json);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.error(\"❌ Error al crear venta. Código:\", pm.response.code);\r",
+							"}\r",
+							"pm.test(\"Status 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sku\":\"OREO_DOUBLE\",\"units\":40,\"price\":2.49,\"branch\":\"Miraflores\",\"soldAt\":\"2025-09-02T15:10:00Z\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.3.-Venta #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    const json = pm.response.json();\r",
+							"    if (json && json.id) {\r",
+							"        pm.collectionVariables.set(\"sale_id\", json.id);\r",
+							"        console.log(\"✅ ID guardado:\", json.id);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ No se encontró el campo 'id' en la respuesta:\", json);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.error(\"❌ Error al crear venta. Código:\", pm.response.code);\r",
+							"}\r",
+							"pm.test(\"Status 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sku\":\"OREO_THINS\",\"units\":32,\"price\":2.19,\"branch\":\"San Isidro\",\"soldAt\":\"2025-09-03T11:05:00Z\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.4.-Venta #4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    const json = pm.response.json();\r",
+							"    if (json && json.id) {\r",
+							"        pm.collectionVariables.set(\"sale_id\", json.id);\r",
+							"        console.log(\"✅ ID guardado:\", json.id);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ No se encontró el campo 'id' en la respuesta:\", json);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.error(\"❌ Error al crear venta. Código:\", pm.response.code);\r",
+							"}\r",
+							"pm.test(\"Status 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sku\":\"OREO_DOUBLE\",\"units\":55,\"price\":2.49,\"branch\":\"San Isidro\",\"soldAt\":\"2025-09-04T18:50:00Z\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.5.-Venta #5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    const json = pm.response.json();\r",
+							"    if (json && json.id) {\r",
+							"        pm.collectionVariables.set(\"sale_id\", json.id);\r",
+							"        console.log(\"✅ ID guardado:\", json.id);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ No se encontró el campo 'id' en la respuesta:\", json);\r",
+							"    }\r",
+							"} else {\r",
+							"    console.error(\"❌ Error al crear venta. Código:\", pm.response.code);\r",
+							"}\r",
+							"pm.test(\"Status 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sku\":\"OREO_CLASSIC_12\",\"units\":20,\"price\":1.99,\"branch\":\"Miraflores\",\"soldAt\":\"2025-09-05T09:40:00Z\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.- Listar todas las ventas (CENTRAL) → 200 OK",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.-Listar ventas (BRANCH) → 200 OK solo Miraflores",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{branchToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{branchToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.-Solicitar resumen asíncrono (BRANCH) → 202 Accepted",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{branchToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{branchToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"from\": \"2025-09-01\",\n  \"to\": \"2025-09-07\",\n  \"branch\": \"Miraflores\",\n  \"emailTo\": \"tucorreo@gmail.com\",\n  \"format\": \"PREMIUM\",\n  \"includeCharts\": true,\n  \"attachPdf\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales/summary/weekly/premium",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales",
+						"summary",
+						"weekly",
+						"premium"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9.-Intentar crear venta en otra sucursal (403 esperado)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{branchToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{branchToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sku\": \"OREO_MINI\",\n  \"units\": 10,\n  \"price\": 2.50,\n  \"branch\": \"Surco\",\n  \"soldAt\": \"2025-09-12T18:00:00Z\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10.- Eliminar venta (CENTRAL) → 204 No Content",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{centralToken}}",
+							"type": "string"
+						},
+						{
+							"key": "undefined",
+							"value": "{{centralToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/sales/{{sale_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sales",
+						"{{sale_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "centralToken",
+			"value": ""
+		},
+		{
+			"key": "branchToken",
+			"value": ""
+		},
+		{
+			"key": "sale_id",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		}
+	]
+}
