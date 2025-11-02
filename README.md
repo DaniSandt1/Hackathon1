@@ -81,6 +81,8 @@ postman_collection.json
 6. **Listar todas las ventas (CENTRAL)** → `200`
 7. **Listar ventas (BRANCH)** → solo Miraflores
 8. **Resumen semanal (BRANCH)** → `202` (envía correo)
+ ✉️ Importante — Configuración del correo de destino
+⚠️ Antes de ejecutar el paso en Postman, editar el body del request y reemplaza el campo "emailTo" con correo propio.
 9. **Intentar crear venta otra sucursal (BRANCH)** → `403`
 10. **Eliminar venta (CENTRAL)** → `204`
 
