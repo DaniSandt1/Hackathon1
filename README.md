@@ -8,10 +8,12 @@
 | Integrante | Código UTEC |
 |-------------|-------------|
 | Daniel Guillermo Sandoval Toro | 202310533 |
-|  |             |
-|  |             |
-|  |             |
-|  |             |
+| Ray Sebastian Bolaños Aedo  |             |
+| Sebastian Cangalaya Martinez |             |
+| Fabrizio Leandro Gonzales Nuñez  |             |
+| Miguel Angel Champi Hinojosa |             |
+
+
 
 ---
 
